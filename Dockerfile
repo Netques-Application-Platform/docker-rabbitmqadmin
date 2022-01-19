@@ -1,12 +1,10 @@
 FROM alpine:latest
 
-MAINTAINER Sanyam Kapoor "1sanyamkapoor@gmail.com"
-
 ADD ./scripts/docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN apk update &&\
-  apk add --update curl python &&\
-  curl https://raw.githubusercontent.com/rabbitmq/rabbitmq-management/rabbitmq_v3_6_1/bin/rabbitmqadmin -o /usr/bin/rabbitmqadmin &&\
+  apk add --update curl python3 &&\
+  curl https://raw.githubusercontent.com/rabbitmq/rabbitmq-server/v3.9.11/deps/rabbitmq_management/bin/rabbitmqadmin -o /usr/bin/rabbitmqadmin &&\
   chmod +x /usr/bin/rabbitmqadmin &&\
   chmod +x /docker-entrypoint.sh
 

@@ -6,7 +6,7 @@
 A `rabbitmqadmin` docker image for administration of `RabbitMQ`.
 
 The container contains the following:
-* [`rabbitmqadmin`](https://www.rabbitmq.com/management-cli.html) (Based on latest `RabbitMQ 3.6`)
+* [`rabbitmqadmin`](https://www.rabbitmq.com/management-cli.html) (Based on `RabbitMQ 3.9.11`)
 
 ## Images
 * `latest`, `0.1`, `0.1.0` ([Dockerfile](./Dockerfile))
