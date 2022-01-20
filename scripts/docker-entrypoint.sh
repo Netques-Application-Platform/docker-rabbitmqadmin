@@ -8,4 +8,10 @@ RABBIT_PASSWORD=${RABBIT_PASSWORD:-guest}
 RABBIT_VHOST=${RABBIT_VHOST:-/}
 
 # assign some vars from global variables and rest take from "CMD"
-/usr/bin/rabbitmqadmin -H $RABBIT_HOST -V $RABBIT_VHOST -P $RABBIT_PORT -u $RABBIT_USER -p $RABBIT_PASSWORD $@
+/usr/bin/rabbitmqadmin \
+  -H $RABBIT_HOST \
+  -V $RABBIT_VHOST \
+  -P $RABBIT_PORT \
+  -u $RABBIT_USER \
+  -p $RABBIT_PASSWORD \
+  "$@"
