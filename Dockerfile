@@ -17,7 +17,6 @@ ENV RABBIT_HOST=127.0.0.1 \
   RABBIT_PASSWORD=guest \
   RABBIT_VHOST=/ \
   RABBIT_EXCHANGE=amq.default \
-  RABBIT_QUEUE=nap-tasks \
-  RABBIT_PAYLOAD="{}"
+  RABBIT_QUEUE=nap-tasks
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
