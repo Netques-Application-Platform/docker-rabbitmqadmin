@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 RABBIT_HOST=${RABBIT_HOST:-127.0.0.1}
 RABBIT_PORT=${RABBIT_PORT:-15672}
 RABBIT_USER=${RABBIT_USER:-guest}
@@ -6,9 +8,8 @@ RABBIT_VHOST=${RABBIT_VHOST:-/}
 
 RABBIT_EXCHANGE=${RABBIT_EXCHANGE:-amq.default}
 RABBIT_QUEUE=${RABBIT_QUEUE:-nap-tasks}
-RABBIT_PAYLOAD=${RABBIT_PAYLOAD:-"{}"}
 
-./rabbitmqadmin -H $RABBIT_HOST \
+/usr/bin/rabbitmqadmin -H $RABBIT_HOST \
   -V $RABBIT_VHOST \
   -P $RABBIT_PORT \
   -u $RABBIT_USER \
