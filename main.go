@@ -21,6 +21,7 @@ func main() {
 		vhost    string
 		host     string
 		port     string
+		debug    bool
 	)
 
 	viper.SetDefault("RABBIT_QUEUE", "nap-tasks")
@@ -30,6 +31,7 @@ func main() {
 	viper.SetDefault("RABBIT_VHOST", "/")
 	viper.SetDefault("RABBIT_HOST", "127.0.0.1")
 	viper.SetDefault("RABBIT_PORT", "15672")
+	viper.SetDefault("DEBUG", false)
 	viper.AutomaticEnv()
 
 	queue = viper.GetString("RABBIT_QUEUE")
@@ -39,8 +41,12 @@ func main() {
 	vhost = viper.GetString("RABBIT_VHOST")
 	host = viper.GetString("RABBIT_HOST")
 	port = viper.GetString("RABBIT_PORT")
+	debug = viper.GetBool("DEBUG")
 
 	fullUrl := fmt.Sprintf("http://%v:%v/api/exchanges/%v/%v/publish", host, port, url.PathEscape(vhost), exchange)
+	if debug {
+		fmt.Println("DEBUG", user, password, exchange, vhost, queue, host, port)
+	}
 
 	fmt.Println("posting", fullUrl, queue, os.Args[1])
 
