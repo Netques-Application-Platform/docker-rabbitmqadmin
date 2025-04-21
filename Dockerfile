@@ -1,22 +1,27 @@
-FROM alpine:latest
+# Use the official Go image as the base image
+FROM golang:1.24-alpine AS builder
 
-ADD ./scripts/docker-entrypoint.sh /docker-entrypoint.sh
-ADD ./scripts/publish.sh /publish.sh
+# Set the working directory inside the container
+WORKDIR /app
 
-RUN apk update &&\
-  apk add --update curl python3 &&\
-  curl https://raw.githubusercontent.com/rabbitmq/rabbitmq-server/v3.9.11/deps/rabbitmq_management/bin/rabbitmqadmin -o /usr/bin/rabbitmqadmin &&\
-  chmod +x /usr/bin/rabbitmqadmin &&\
-  chmod +x /docker-entrypoint.sh &&\
-  chmod +x /publish.sh
+# Copy the Go project files to the container
+COPY . .
 
-# possible environment variables with defaults
-ENV RABBIT_HOST=127.0.0.1 \
-  RABBIT_PORT=15672 \
-  RABBIT_USER=guest \
-  RABBIT_PASSWORD=guest \
-  RABBIT_VHOST=/ \
-  RABBIT_EXCHANGE=amq.default \
-  RABBIT_QUEUE=nap-tasks
+# Build the Go project
+RUN go build -o app .
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+## Here create the new container that will server as the runner. Copy in the build output.
+FROM alpine:3.21
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the built binary from the builder container
+COPY --from=builder /app/app .
+
+# Create a user to run the binary
+RUN adduser -D appuser
+USER appuser
+
+# Set the entry point to run the built binary
+ENTRYPOINT ["./app"]
